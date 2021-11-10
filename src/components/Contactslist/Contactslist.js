@@ -1,9 +1,13 @@
-import React from 'react';
+import { useEffect } from 'react';
 import { connect } from 'react-redux';
-import contactsAction from '../../redux/contacts/contacts-actions';
+import contactsOperation from '../../redux/contacts/contacts-operations';
 import './contactlist.css';
 
 function ContactsList({ contacts, onDeleteContacts }) {
+  useEffect(() => {
+    contactsOperation.fetchContacts(res => console.log(res));
+  }, []);
+
   return (
     <ul className="contacts">
       {contacts.map(({ id, name, number }) => (
@@ -39,7 +43,8 @@ const mapStateToProps = state => {
   };
 };
 const mapDispatchToProps = dispatch => ({
-  onDeleteContacts: id => dispatch(contactsAction.deleteContacts(id)),
+  fetchContacts: () => dispatch(contactsOperation.fetchContacts()),
+  onDeleteContacts: id => dispatch(contactsOperation.deleteContacts(id)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ContactsList);

@@ -1,4 +1,3 @@
-// import { useState, useEffect } from 'react';
 import ContactsList from './components/Contactslist/Contactslist';
 import Form from './components/Form/Form';
 import Filter from './components/Filter/Filter';

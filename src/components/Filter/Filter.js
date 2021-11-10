@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import s from './filter.module.css';
-import ContactsActions from '../../redux/contacts/contacts-actions';
+import { filterContacts } from '../../redux/contacts/contacts-actions';
 
 function Filter({ value, onHandleFilter }) {
   return (
@@ -19,7 +19,7 @@ const mapStateToProps = state => ({
   value: state.contacts.filter,
 });
 const mapDispatchToProps = dispatch => ({
-  onHandleFilter: event => dispatch(ContactsActions.filter(event.target.value)),
+  onHandleFilter: event => dispatch(filterContacts(event.target.value)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Filter);

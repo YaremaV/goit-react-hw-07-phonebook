@@ -1,36 +1,39 @@
 import { combineReducers } from 'redux';
-import initialContacts from '../.././contacts.json';
 import { createReducer } from '@reduxjs/toolkit';
-import actions from './contacts-actions';
-// import types from './contacts-types';
+import {
+  addContactsRequest,
+  addContactsSuccess,
+  addContactsError,
+  deleteContactsRequest,
+  deleteContactsSuccess,
+  deleteContactsError,
+  filterContacts,
+  fetchContactsRequest,
+  fetchContactsSuccess,
+  fetchContactsError,
+} from './contacts-actions';
 
-const items = createReducer(initialContacts, {
-  [actions.addContacts]: (state, action) => [...state, action.payload],
-  [actions.deleteContacts]: (state, action) =>
+const items = createReducer([], {
+  [fetchContactsSuccess]: (_, { payload }) => payload,
+  [addContactsSuccess]: (state, action) => [...state, action.payload],
+  [deleteContactsSuccess]: (state, action) =>
     state.filter(contact => contact.id !== action.payload),
 });
-const filter = createReducer('', {
-  [actions.filter]: (_, action) => action.payload,
+
+const loading = createReducer(false, {
+  [fetchContactsRequest]: () => true,
+  [fetchContactsSuccess]: () => false,
+  [fetchContactsError]: () => false,
+  [addContactsRequest]: () => true,
+  [addContactsSuccess]: () => false,
+  [addContactsError]: () => false,
+  [deleteContactsRequest]: () => true,
+  [deleteContactsSuccess]: () => false,
+  [deleteContactsError]: () => false,
 });
-// const items = (state = initialContacts, { type, payload }) => {
-//   switch (type) {
-//     case types.ADD:
-//       return [...state, payload];
-//     case types.DELETE:
-//       return state.filter(contact => contact.id !== payload);
-//     default:
-//       return state;
-//   }
-// };
 
-// const filter = (state = '', { type, payload }) => {
-//   switch (type) {
-//     case types.FILTER:
-//       return payload;
+const filter = createReducer('', {
+  [filterContacts]: (_, action) => action.payload,
+});
 
-//     default:
-//       return state;
-//   }
-// };
-
-export default combineReducers({ items, filter });
+export default combineReducers({ items, filter, loading });
