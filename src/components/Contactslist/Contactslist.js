@@ -1,13 +1,8 @@
-import { useEffect } from 'react';
 import { connect } from 'react-redux';
 import contactsOperation from '../../redux/contacts/contacts-operations';
 import './contactlist.css';
 
 function ContactsList({ contacts, onDeleteContacts }) {
-  useEffect(() => {
-    contactsOperation.fetchContacts(res => console.log(res));
-  }, []);
-
   return (
     <ul className="contacts">
       {contacts.map(({ id, name, number }) => (
